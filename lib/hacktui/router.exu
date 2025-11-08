@@ -1,0 +1,10 @@
+defmodule HackTUI.Router do
+  use GenServer
+
+  def start_link(_), do: GenServer.start_link(__MODULE__, %{}, name: __MODULE__)
+
+  def handle_info({:key, char}, state) do
+    HackTUI.MCP.dispatch({:key, char})
+    {:noreply, state}
+  end
+end
