@@ -3,8 +3,8 @@ defmodule HackTUI.Renderer do
   HackTUI.Renderer — draws the TUI frame, polls shared state for messages,
   and updates at a fixed FPS.
 
-  It maintains a single, stable terminal box updated in place
-  using ANSI cursor repositioning rather than full screen clears.
+  Maintains a single, stable terminal box updated in place
+  using ANSI cursor repositioning rather than full-screen clears.
   """
 
   use GenServer
@@ -22,7 +22,6 @@ defmodule HackTUI.Renderer do
     # Clear screen once at startup
     IO.write(IO.ANSI.clear())
     IO.write(IO.ANSI.home())
-
     schedule_tick()
     {:ok, Map.put(state, :frame, 0)}
   end
@@ -67,9 +66,6 @@ defmodule HackTUI.Renderer do
     ]
 
     Enum.each(box, &IO.puts/1)
-
-    # Flush to stdout explicitly (Elixir 1.19+ requires device)
-    IO.flush(:stdio)
   end
 
   defp pad(str, width) do
