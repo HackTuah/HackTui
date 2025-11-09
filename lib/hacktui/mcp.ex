@@ -28,9 +28,9 @@ defmodule HackTUI.MCP do
     key = key |> String.downcase() |> String.trim() |> String.slice(0, 1)
 
     cond do
-      key in [nil, ""] ->
-        # ignore empty or control keys
+      key == "" ->
         {:noreply, state}
+
 
       key == "r" ->
         # handle refresh animation asynchronously
