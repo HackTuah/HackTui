@@ -5,12 +5,14 @@ defmodule HackTUI.Renderer do
 
   Maintains a single, stable terminal box updated in place
   using ANSI cursor repositioning rather than full-screen clears.
+  Now includes an aurora-style color cycle: purple → cyan → magenta → green.
   """
 
   use GenServer
   alias HackTUI.State
 
   @fps 15  # frames per second
+  @palette [:magenta, :light_magenta, :cyan, :light_cyan, :green, :light_green]
 
   # ————————————————————————————————————————————————————————
   # OTP entry points
@@ -19,7 +21,6 @@ defmodule HackTUI.Renderer do
   def start_link(_), do: GenServer.start_link(__MODULE__, %{}, name: __MODULE__)
 
   def init(state) do
-    # Clear screen once at startup
     IO.write(IO.ANSI.clear())
     IO.write(IO.ANSI.home())
     schedule_tick()
@@ -39,19 +40,24 @@ defmodule HackTUI.Renderer do
   defp schedule_tick, do: Process.send_after(self(), :tick, frame_time())
   defp frame_time, do: trunc(1000 / @fps)
 
+  # pick color from aurora palette
+  defp aurora_color(frame),
+    do: Enum.at(@palette, rem(frame, length(@palette)))
+
   defp draw_frame(frame) do
-    # Fetch message from shared state (or show default help)
     msg =
       case State.get() do
         %{message: m} when is_binary(m) -> m
         _ -> "Press H for help • R refresh • X execute • Q quit"
       end
 
-    # Move cursor to top-left (1,1) so each frame overwrites the last
-    IO.write(IO.ANSI.cursor(1, 1))
-
     now = DateTime.utc_now() |> DateTime.to_string()
     node_name = to_string(node())
+    color = aurora_color(frame)
+
+    # Move cursor home and set color
+    IO.write(IO.ANSI.cursor(1, 1))
+    IO.write(IO.ANSI.format([IO.ANSI.color(color)]))
 
     box = [
       "┌────────────────────────────────────────────┐",
@@ -66,6 +72,9 @@ defmodule HackTUI.Renderer do
     ]
 
     Enum.each(box, &IO.puts/1)
+
+    # reset color so shell text isn’t tinted after exit
+    IO.write(IO.ANSI.reset())
   end
 
   defp pad(str, width) do
