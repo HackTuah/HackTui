@@ -34,40 +34,36 @@ defmodule HackTUI.Renderer do
   defp frame_time, do: trunc(1000 / @fps)
 
   defp draw_frame(frame) do
-    # Pull the latest shared message (if any)
-    msg =
-      case State.get() do
-        %{message: m} when is_binary(m) -> m
-        _ -> ""
-      end
+  msg =
+    case State.get() do
+      %{message: m} when is_binary(m) -> m
+      _ -> "Press H for help • R refresh • X execute • Q quit"
+    end
 
-    IO.write(IO.ANSI.clear())
-    IO.write(IO.ANSI.home())
+  now        = DateTime.utc_now() |> DateTime.to_string()
+  node_name  = to_string(node())
 
-    now = DateTime.utc_now() |> DateTime.to_string()
-    node_name = to_string(node())
+  # Move cursor to top-left (1,1) and draw over the same area
+  IO.write(IO.ANSI.cursor(1, 1))
 
-    IO.puts("┌────────────────────────────────────────────┐")
-    IO.puts("│                H A C K T U I               │")
-    IO.puts("├────────────────────────────────────────────┤")
-    IO.puts("│ Frame: #{pad("#{frame}", 36)}│")
-    IO.puts("│ Node:  #{pad(node_name, 35)}│")
-    IO.puts("│ Time:  #{pad(now, 35)}│")
-    IO.puts("├────────────────────────────────────────────┤")
+  box = [
+    "┌────────────────────────────────────────────┐",
+    "│                H A C K T U I               │",
+    "├────────────────────────────────────────────┤",
+    "│ Frame: #{pad("#{frame}", 36)}│",
+    "│ Node:  #{pad(node_name, 35)}│",
+    "│ Time:  #{pad(now, 35)}│",
+    "├────────────────────────────────────────────┤",
+    "│ #{pad(msg, 42)}│",
+    "└────────────────────────────────────────────┘"
+  ]
 
-    display_msg =
-      if msg == "" do
-        "Press H for help • R refresh • X execute • Q quit"
-      else
-        msg
-      end
+  Enum.each(box, &IO.puts/1)
 
-    IO.puts("│ #{pad(display_msg, 42)}│")
-    IO.puts("└────────────────────────────────────────────┘")
+  # Flush to stdout explicitly
+  IO.flush(:stdio)
+end
 
-    # Force flush to display instantly
-    IO.flush()
-  end
 
   defp pad(str, width) do
     s = String.slice(to_string(str), 0, width)
