@@ -4,11 +4,12 @@ defmodule HackTUI.MCP do
   """
 
   use GenServer
+  alias HackTUI.State
 
   @commands %{
-    "h" => {:show, "Help: [H]elp [R]efresh [X]ecute [Q]uit"},
-    "r" => {:show, "Refreshing screen..."},
-    "x" => {:show, "Execute command placeholder"}
+    "h" => "Help: [H]elp [R]efresh [X]ecute [Q]uit",
+    "r" => "Refreshing screen...",
+    "x" => "Execute command placeholder"
   }
 
   def start_link(_opts \\ []),
@@ -16,15 +17,12 @@ defmodule HackTUI.MCP do
 
   def init(state), do: {:ok, state}
 
-  def dispatch(msg), do: send(__MODULE__, msg)
+  # Called from Router when a key is pressed
+  def dispatch({:key, key}), do: send(__MODULE__, {:key, key})
 
   def handle_info({:key, key}, state) do
-    case Map.get(@commands, key) do
-      {:show, msg} ->
-        HackTUI.State.update(&Map.put(&1, :message, msg))
-      nil ->
-        HackTUI.State.update(&Map.put(&1, :message, "Unknown key: #{key}"))
-    end
+    msg = Map.get(@commands, key, "Unknown key: #{key}")
+    State.update(&Map.put(&1, :message, msg))
     {:noreply, state}
   end
 end
