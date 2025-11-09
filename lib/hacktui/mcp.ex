@@ -20,9 +20,15 @@ defmodule HackTUI.MCP do
   # Called from Router when a key is pressed
   def dispatch({:key, key}), do: send(__MODULE__, {:key, key})
 
-  def handle_info({:key, key}, state) do
-    msg = Map.get(@commands, key, "Unknown key: #{key}")
-    State.update(&Map.put(&1, :message, msg))
-    {:noreply, state}
-  end
+  def handle_info({:key, key}, state) when is_binary(key) do
+  key = String.trim(key)
+  msg =
+    case Map.get(@commands, key) do
+      nil -> "Unknown key: #{key}"
+      text -> text
+    end
+
+  HackTUI.State.update(&Map.put(&1, :message, msg))
+  {:noreply, state}
+end
 end
