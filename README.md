@@ -10,7 +10,7 @@
 
 # 🌌 HackTUI
 
-**HackTUI** is the first handcrafted **Elixir-native Terminal User Interface (TUI)** framework built entirely from scratch — no dependencies, no macros, just pure OTP, ANSI control codes, and a touch of aurora magic.
+**HackTUI** is a **Elixir-native Terminal User Interface (TUI)** framework built entirely from scratch... no dependencies, no macros, just pure OTP, ANSI control codes, and a touch of aurora magic.
 
 ![HackTUI Aurora Preview](https://github.com/HackTuah/HackTUI/assets/preview.png)
 
