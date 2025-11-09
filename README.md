@@ -33,12 +33,12 @@
  ┌────────────────────────────────────┐
  │              HackTUI               │
  ├────────────────────────────────────┤
- │  Application Supervisor             │
- │   ├── Renderer (GenServer)          │
- │   ├── Input (Key Reader)            │
- │   ├── Router (Dispatch Layer)       │
- │   ├── MCP (Message / Command Proc.) │
- │   └── State (Global ETS / Map)      │
+ │  Application Supervisor            │
+ │   ├── Renderer (GenServer)         │
+ │   ├── Input (Key Reader)           │
+ │   ├── Router (Dispatch Layer)      │
+ │   ├── MCP (Message / Command Proc.)│
+ │   └── State (Global ETS / Map)     │
  └────────────────────────────────────┘
 ```
 
