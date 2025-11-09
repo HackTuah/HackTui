@@ -47,16 +47,27 @@ defmodule HackTUI.Renderer do
     now = DateTime.utc_now() |> DateTime.to_string()
     node_name = to_string(node())
 
-    # Draw a clean box with dynamic padding and message line
     IO.puts("┌────────────────────────────────────────────┐")
-    IO.puts("│               H A C K T U I                │")
+    IO.puts("│                H A C K T U I               │")
     IO.puts("├────────────────────────────────────────────┤")
     IO.puts("│ Frame: #{pad("#{frame}", 36)}│")
     IO.puts("│ Node:  #{pad(node_name, 35)}│")
     IO.puts("│ Time:  #{pad(now, 35)}│")
     IO.puts("├────────────────────────────────────────────┤")
-    IO.puts("│ #{pad(msg, 42)}│")
+
+    # Always show a message panel, even if empty
+    display_msg =
+      if msg == "" do
+        "Press H for help • R refresh • X execute • Q quit"
+      else
+        msg
+      end
+
+    IO.puts("│ #{pad(display_msg, 42)}│")
     IO.puts("└────────────────────────────────────────────┘")
+
+    # Force flush to display instantly
+    IO.flush()
   end
 
   defp pad(str, width) do
