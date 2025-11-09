@@ -12,12 +12,18 @@ defmodule HackTUI.Renderer do
   alias HackTUI.State
 
   @fps 15  # frames per second
-  @palette [:magenta, :light_magenta, :cyan, :light_cyan, :green, :light_green]
+  @palette [
+    IO.ANSI.magenta(),
+    IO.ANSI.light_magenta(),
+    IO.ANSI.cyan(),
+    IO.ANSI.light_cyan(),
+    IO.ANSI.green(),
+    IO.ANSI.light_green()
+  ]
 
   # ————————————————————————————————————————————————————————
   # OTP entry points
   # ————————————————————————————————————————————————————————
-
   def start_link(_), do: GenServer.start_link(__MODULE__, %{}, name: __MODULE__)
 
   def init(state) do
@@ -36,11 +42,9 @@ defmodule HackTUI.Renderer do
   # ————————————————————————————————————————————————————————
   # Internal utilities
   # ————————————————————————————————————————————————————————
-
   defp schedule_tick, do: Process.send_after(self(), :tick, frame_time())
   defp frame_time, do: trunc(1000 / @fps)
 
-  # pick color from aurora palette
   defp aurora_color(frame),
     do: Enum.at(@palette, rem(frame, length(@palette)))
 
@@ -53,11 +57,10 @@ defmodule HackTUI.Renderer do
 
     now = DateTime.utc_now() |> DateTime.to_string()
     node_name = to_string(node())
-    color = aurora_color(frame)
+    color_code = aurora_color(frame)
 
-    # Move cursor home and set color
     IO.write(IO.ANSI.cursor(1, 1))
-    IO.write(IO.ANSI.format([IO.ANSI.color(color)]))
+    IO.write(color_code)
 
     box = [
       "┌────────────────────────────────────────────┐",
