@@ -78,7 +78,7 @@ defmodule HackTUI.MCP do
 
     for frame <- 1..120 do
       # Adjust center and radius for your terminal
-      HackTUI.Polar.draw(35, 12, 8, frame)
+      Polar.draw(35, 12, 8, frame)
       Process.sleep(33)
     end
 
