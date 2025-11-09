@@ -1,7 +1,7 @@
 defmodule HackTUI.MCP do
   @moduledoc """
   Message/Command Processor – handles keyboard commands and updates shared state.
-  """defmodule HackTUI.MCP do
+  """
 
   use GenServer
   alias HackTUI.State
