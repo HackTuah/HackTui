@@ -49,7 +49,7 @@ defmodule HackTUI.Renderer do
 
     # Draw a clean box with dynamic padding and message line
     IO.puts("┌────────────────────────────────────────────┐")
-    IO.puts("│               H A C K T U I               │")
+    IO.puts("│               H A C K T U I                │")
     IO.puts("├────────────────────────────────────────────┤")
     IO.puts("│ Frame: #{pad("#{frame}", 36)}│")
     IO.puts("│ Node:  #{pad(node_name, 35)}│")
