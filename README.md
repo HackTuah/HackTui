@@ -130,4 +130,4 @@ Crafted with ☕, ⚡, and Elixir’s OTP soul.
 ---
 
 > _"The terminal isn’t just text — it’s canvas."_  
-> — **HackTuah**
+> — **ChatGPT**
