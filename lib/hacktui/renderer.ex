@@ -55,7 +55,6 @@ defmodule HackTUI.Renderer do
     IO.puts("│ Time:  #{pad(now, 35)}│")
     IO.puts("├────────────────────────────────────────────┤")
 
-    # Always show a message panel, even if empty
     display_msg =
       if msg == "" do
         "Press H for help • R refresh • X execute • Q quit"
