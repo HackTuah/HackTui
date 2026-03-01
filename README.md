@@ -31,19 +31,19 @@ enrichment.*
 ##  Advanced SIEM Features
 
 * **Stateful Correlation Engine**
-    [cite_start]Tracks behavioral patterns over time[cite: 5, 13]. [cite_start]It automatically escalates repetitive suspicious lookups from standard warnings to **CRITICAL** alerts to highlight potential malware beaconing[cite: 11].
+    Tracks behavioral patterns over time. It automatically escalates repetitive suspicious lookups from standard warnings to **CRITICAL** alerts to highlight potential malware beaconing.
 
 * **Asynchronous Threat Enrichment**
-    [cite_start]Leverages a dedicated enrichment worker to perform non-blocking DNS resolution and GeoIP lookups (Country, ISP) for flagged domains without interrupting packet ingestion[cite: 10].
+    Leverages a dedicated enrichment worker to perform non-blocking DNS resolution and GeoIP lookups (Country, ISP) for flagged domains without interrupting packet ingestion.
 
 * **Persistent Historical Storage**
-    [cite_start]Integrated with **PostgreSQL** via Ecto[cite: 6]. [cite_start]All security events are serialized to a permanent data store, allowing for deep forensic analysis and historical trend reporting[cite: 6, 14].
+    Integrated with **PostgreSQL** via Ecto. All security events are serialized to a permanent data store, allowing for deep forensic analysis and historical trend reporting.
 
 * **Fault-Tolerant Design**
-    [cite_start]Built on the Erlang/OTP supervision tree[cite: 5, 13]. Individual components are isolated; a failure in one component does not compromise the stability of the entire SOC.
+    Built on the Erlang/OTP supervision tree. Individual components are isolated; a failure in one component does not compromise the stability of the entire SOC.
 
 * **Historical Forensic Search**
-    [cite_start]Interactive search mode (press **[s]**) allows investigators to query the PostgreSQL backend for specific domains or alert patterns[cite: 14, 15]. [cite_start]This instantly retrieves historical telemetry from the database for deep incident correlation[cite: 16].
+    Interactive search mode (press **[s]**) allows investigators to query the PostgreSQL backend for specific domains or alert patterns. This instantly retrieves historical telemetry from the database for deep incident correlation.
 
 ------------------------------------------------------------------------
 
