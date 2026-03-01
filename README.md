@@ -21,7 +21,7 @@ actionable security intelligence.
 
 ##  Dashboard Preview
 
-![HackTUI Security Interface](assets/images/UI.png)
+![HackTUI Security Interface](assets/images/UI_1.png)
 
 *Figure 1: Real-time correlation of DNS beaconing events and GeoIP
 enrichment.*
