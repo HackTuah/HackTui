@@ -32,14 +32,17 @@ It transforms raw telemetry into actionable security intelligence.
 
 ------------------------------------------------------------------------
 
-## 🌐 Threat Intelligence & Risk Assessment
+## 🌐 Threat Intelligence & Risk ## 🌐 Threat Intelligence & Risk Assessment
 
-  Indicator     Status      Context
-  ------------- ----------- ---------------------------
-  🟢 TRUSTED    Verified    Known-safe infrastructure
-  🟡 ANOMALY    Warning     Suspicious TLD behavior
-  🔴 CRITICAL   High Risk   Unknown infrastructure
-  🔴 DEAD       NXDOMAIN    Possible DGA activity
+HackTUI features a custom Risk Engine that classifies network connections based on ISP reputation, domain TLD, and resolution status:
+
+| Indicator | Status | Context |
+| :--- | :--- | :--- |
+| 🟢 **[TRUSTED]** | Verified | Known-safe corporate infrastructure (Google, Amazon, Cloudflare). |
+| 🟡 **[ANOMALY]** | Warning | Suspicious TLDs (.xyz, .cloud) utilizing reputable CDNs to mask origin. |
+| 🔴 **[CRITICAL]**| High Risk | High-risk TLDs on unknown or non-reputable infrastructure. |
+| 🔴 **[DEAD]** | NXDOMAIN | Unresolved domains, often indicative of DGA (Domain Generation Algorithms). |
+
 
 ------------------------------------------------------------------------
 
